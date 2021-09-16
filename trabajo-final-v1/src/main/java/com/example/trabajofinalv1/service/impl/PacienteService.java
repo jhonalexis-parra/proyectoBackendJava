@@ -1,5 +1,6 @@
 package com.example.trabajofinalv1.service.impl;
 
+import com.example.trabajofinalv1.dto.PacienteDto;
 import com.example.trabajofinalv1.persistence.entities.Paciente;
 import com.example.trabajofinalv1.persistence.repository.IPacienteRepository;
 import com.example.trabajofinalv1.service.IService;
@@ -7,26 +8,41 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class PacienteService implements IService<Paciente> {
+public class PacienteService  {
 
     @Autowired
     IPacienteRepository repository;
 
-    @Override
-    public String save(Paciente paciente) {
+
+    public PacienteDto guardar(PacienteDto paciente) {
         paciente.setFechaIngreso(LocalDate.now());
-        if(repository.save(paciente) != null){
-            return "OK";
-        }else{
-            return null;
-        }
+        paciente.setId(repository.save(paciente.toEntity()).getId());
+        return paciente;
     }
 
-    @Override
-    public List<Paciente> obtenerTodos() {
-        return repository.findAll();
+    public PacienteDto buscar(Long id){
+        return new PacienteDto(repository.getById(id));
     }
+
+    public List<PacienteDto> buscarTodos() {
+        List<PacienteDto> pacientes = new ArrayList<>();
+
+        for(Paciente p: repository.findAll()){
+            pacientes.add(new PacienteDto(p));
+        }
+        return pacientes;
+    }
+
+    public PacienteDto actualizar (PacienteDto p){
+        repository.save(p.toEntity());
+        return p;
+    }
+
+
+
+
 }

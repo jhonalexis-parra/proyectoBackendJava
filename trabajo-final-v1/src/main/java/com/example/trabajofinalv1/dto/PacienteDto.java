@@ -41,6 +41,4 @@ public class PacienteDto {
         return entity;
     }
 
-
-
 }
