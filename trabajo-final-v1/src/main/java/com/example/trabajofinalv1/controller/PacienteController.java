@@ -1,7 +1,6 @@
 package com.example.trabajofinalv1.controller;
 
-import com.example.trabajofinalv1.dto.PacienteDto;
-import com.example.trabajofinalv1.persistence.entities.Paciente;
+import com.example.trabajofinalv1.model.PacienteDto;
 import com.example.trabajofinalv1.service.impl.PacienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +35,6 @@ public class PacienteController {
     }
 
     // TODO agregar borrar y agregar buscar por id
-
 
 
 }

@@ -1,32 +1,31 @@
 package com.example.trabajofinalv1.service.impl;
 
-import com.example.trabajofinalv1.dto.OdontologoDto;
-import com.example.trabajofinalv1.persistence.entities.Odontologo;
+import com.example.trabajofinalv1.model.OdontologoDto;
 import com.example.trabajofinalv1.persistence.repository.IOdontologoRepository;
-import com.example.trabajofinalv1.service.IService;
+import com.example.trabajofinalv1.service.IServiceOdontologo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class OdontologoService {
+public class OdontologoService implements IServiceOdontologo {
 
     @Autowired
     IOdontologoRepository repository;
 
-
+    @Override
     public OdontologoDto guardar (OdontologoDto odontologo){
         odontologo.setId(repository.save(odontologo.toEntity()).getId());
         return odontologo;
     }
 
-    public OdontologoDto buscar (Long id){
-        return new OdontologoDto(repository.getById(id));
-    }
+    //public OdontologoDto buscar (Long id){
+    //    return new OdontologoDto(repository.getById(id));
+    //}
 
+    @Override
     public List<OdontologoDto> buscarTodos(){
         //List <OdontologoDto> odontologos = new ArrayList<>();
 
@@ -38,9 +37,16 @@ public class OdontologoService {
         return odontologos;
     }
 
+    @Override
     public OdontologoDto actualizar (OdontologoDto o){
+        // TODO realizar validación de datos de actualización del odontologo
         repository.save(o.toEntity());
         return o;
     }
 
+    @Override
+    public List<OdontologoDto> buscarPorNombreDto(String nombre) {
+        List<OdontologoDto> odontologos = repository.buscarOdontologoPorNombre(nombre).stream().map(o -> new OdontologoDto(o)).collect(Collectors.toList());
+        return odontologos;
+    }
 }

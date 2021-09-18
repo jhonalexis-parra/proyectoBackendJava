@@ -1,7 +1,6 @@
-package com.example.trabajofinalv1.dto;
+package com.example.trabajofinalv1.model;
 
 import com.example.trabajofinalv1.persistence.entities.Odontologo;
-import lombok.Generated;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -51,5 +50,6 @@ public class OdontologoDto {
 
         return  entity;
     }
+
 
 }
