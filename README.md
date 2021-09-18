@@ -17,9 +17,9 @@
 
 ## Wiki 📖
 
-## Odontologo
+### Odontologo
 
-### Crear odontologo
+#### Crear odontologo
 http://localhost:8081/odontologos/nuevo
 
 {
@@ -40,10 +40,10 @@ http://localhost:8081/odontologos/nuevo
     "matricula": "ARG0003"
 }
 
-### Buscar todos los odontologos
+#### Buscar todos los odontologos
 http://localhost:8081/odontologos/todos
 
-### Actualizar odontologo
+#### Actualizar odontologo
 http://localhost:8081/odontologos/actualizar
 {
     "id": 3,
@@ -52,14 +52,14 @@ http://localhost:8081/odontologos/actualizar
     "matricula": "ARG0002"
 }
 
-### Buscar por nombre
+#### Buscar por nombre
 http://localhost:8081/odontologos/buscarPorNombre/Rodrigo
 
 Reemplazar Rodrigo por otros nombres
 
-## Paciente
+### Paciente
 
-### Crear paciente
+#### Crear paciente
 http://localhost:8081/pacientes/nuevo
 
 {
@@ -74,10 +74,10 @@ http://localhost:8081/pacientes/nuevo
     }
 }
 
-### Buscar todos los pacientes
+#### Buscar todos los pacientes
 http://localhost:8081/pacientes/todos
 
-### Actualizar paciente
+#### Actualizar paciente
 http://localhost:8081/pacientes/actualizar
 
 {
@@ -95,9 +95,9 @@ http://localhost:8081/pacientes/actualizar
 }
 
 
-## Domicilio
+### Domicilio
 
-### Buscar todos los odontologos
+#### Buscar todos los odontologos
 http://localhost:8081/domicilios/todos
 
 
