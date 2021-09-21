@@ -22,11 +22,6 @@ public class DomicilioService implements IServiceDomicilio {
         return domicilio;
     }
 
-
-    //public DomicilioDto buscar(Long id){
-    //    return new DomicilioDto(repository.getById(id));
-    //}
-
     @Override
     public List<DomicilioDto> buscarTodos() {
         List<DomicilioDto> domicilios = new ArrayList<>();
@@ -41,6 +36,12 @@ public class DomicilioService implements IServiceDomicilio {
     public DomicilioDto actualizar (DomicilioDto d){
         repository.save(d.toEntity());
         return d;
+    }
+
+    @Override
+    public String borrar(DomicilioDto d) {
+        repository.delete(d.toEntity());
+        return "Se ha eliminado " + d.toString();
     }
 
 }

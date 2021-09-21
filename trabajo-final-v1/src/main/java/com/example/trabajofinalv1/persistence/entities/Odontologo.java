@@ -14,7 +14,7 @@ import java.util.Set;
 @ToString
 public class Odontologo implements Serializable {
 
-    // TODO eliminar sequenceName
+
     @Id
     @GeneratedValue(generator = "secuenciaDeOdontologo", strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name="secuenciaDeOdontologo", sequenceName="BD_SECUENCIA_ODONTOLOGO", allocationSize=1)

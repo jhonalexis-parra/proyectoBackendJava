@@ -1,6 +1,8 @@
 package com.example.trabajofinalv1.service.impl;
 
+import com.example.trabajofinalv1.controller.PacienteController;
 import com.example.trabajofinalv1.model.OdontologoDto;
+import com.example.trabajofinalv1.persistence.entities.Odontologo;
 import com.example.trabajofinalv1.persistence.repository.IOdontologoRepository;
 import com.example.trabajofinalv1.service.IServiceOdontologo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class OdontologoService implements IServiceOdontologo {
+
 
     @Autowired
     IOdontologoRepository repository;
@@ -45,8 +48,16 @@ public class OdontologoService implements IServiceOdontologo {
     }
 
     @Override
+    public String borrar(OdontologoDto o) {
+        repository.delete(o.toEntity());
+        return "Se ha eliminado " + o.toString();
+    }
+
+    @Override
     public List<OdontologoDto> buscarPorNombreDto(String nombre) {
         List<OdontologoDto> odontologos = repository.buscarOdontologoPorNombre(nombre).stream().map(o -> new OdontologoDto(o)).collect(Collectors.toList());
         return odontologos;
     }
+
+
 }

@@ -6,5 +6,6 @@ public interface IServiceCRUD<T> {
     T guardar(T t);
     List<T> buscarTodos();
     T actualizar (T t);
+    String borrar (T t);
 
 }
