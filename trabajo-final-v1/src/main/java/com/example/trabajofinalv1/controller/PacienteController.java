@@ -18,7 +18,6 @@ public class PacienteController {
     @Autowired
     PacienteService service;
 
-
     @GetMapping("/todos")
     public ResponseEntity<List<PacienteDto>> getAll(){
         logger.info("Se solicitá la lista de pacientes");

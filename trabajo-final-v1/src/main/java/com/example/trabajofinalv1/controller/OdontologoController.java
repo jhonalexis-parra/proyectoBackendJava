@@ -1,5 +1,7 @@
 package com.example.trabajofinalv1.controller;
 
+import com.example.trabajofinalv1.exceptions.GlobalExceptions;
+import com.example.trabajofinalv1.exceptions.ResourceNotFoundException;
 import com.example.trabajofinalv1.model.OdontologoDto;
 import com.example.trabajofinalv1.model.PacienteDto;
 import com.example.trabajofinalv1.service.impl.OdontologoService;
@@ -21,31 +23,19 @@ public class OdontologoController {
     OdontologoService service;
 
     @GetMapping("/todos")
-    public ResponseEntity<List<OdontologoDto>> getAll(){
+    public ResponseEntity<List<OdontologoDto>> getAll() throws ResourceNotFoundException {
         logger.info("Se solicitá la lista de odontologos");
-        try {
-            logger.debug("Se listan los odontologos");
-            return ResponseEntity.ok(service.buscarTodos());
-        }catch (Exception e){
-            logger.error("Error en el listado de odontologos");
-            return ResponseEntity.badRequest().build();
-        }
-    }
+        return ResponseEntity.ok(service.buscarTodos());
+   }
 
     @PostMapping("/nuevo")
-    public ResponseEntity<OdontologoDto> crearOdontologo (@RequestBody OdontologoDto odontologo){
+    public ResponseEntity<OdontologoDto> crearOdontologo (@RequestBody OdontologoDto odontologo) throws ResourceNotFoundException {
         logger.info("Se solicitá crear un odontologo nuevo");
-        try {
-            logger.debug("Se crea el odontologo " + odontologo.toString());
-            return ResponseEntity.ok(service.guardar(odontologo));
-        }catch (Exception e){
-            logger.error("Error al crear el odontologo: " + odontologo.toString());
-            return ResponseEntity.badRequest().build();
-        }
+        return ResponseEntity.ok(service.guardar(odontologo));
     }
 
     @PutMapping("/actualizar")
-    public ResponseEntity<OdontologoDto> actualizarOdontologo (@RequestBody OdontologoDto odontologo){
+    public ResponseEntity<OdontologoDto> actualizarOdontologo (@RequestBody OdontologoDto odontologo) throws ResourceNotFoundException{
         logger.info("Se solicitá actualizar un odontologo");
         if (odontologo.getId() != null){
             logger.debug("Se actualiza " + odontologo.toString());

@@ -1,5 +1,6 @@
 package com.example.trabajofinalv1.persistence.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -7,6 +8,8 @@ import lombok.ToString;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -22,16 +25,20 @@ public class Paciente implements Serializable {
     private String nombre;
     private String apellido;
     private String dni;
-    private LocalDate fechaIngreso;
+    private Date fechaIngreso;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name ="domicilio_id", nullable = false)
     private Domicilio domicilio;
 
-    @OneToMany(mappedBy = "paciente")
-    private Set<Turno> turnos;
+    @OneToMany(mappedBy = "paciente", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private Set<Turno> turnos = new HashSet<>();
 
-    public Paciente(String nombre, String apellido, String dni, LocalDate fechaIngreso, Domicilio domicilio) {
+    public Paciente() {
+    }
+
+    public Paciente(String nombre, String apellido, String dni, Date fechaIngreso, Domicilio domicilio) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.dni = dni;
@@ -39,6 +46,12 @@ public class Paciente implements Serializable {
         this.domicilio = domicilio;
     }
 
-    public Paciente() {
+    public Paciente(Long id, String nombre, String apellido, String dni, Date fechaIngreso, Domicilio domicilio) {
+        this.id = id;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.dni = dni;
+        this.fechaIngreso = fechaIngreso;
+        this.domicilio = domicilio;
     }
 }

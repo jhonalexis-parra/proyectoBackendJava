@@ -4,7 +4,7 @@ import com.example.trabajofinalv1.persistence.entities.Paciente;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -13,7 +13,7 @@ public class PacienteDto {
     private String nombre;
     private String apellido;
     private String dni;
-    private LocalDate fechaIngreso;
+    private Date fechaIngreso;
     private DomicilioDto domicilio;
 
     public PacienteDto() {

@@ -26,6 +26,9 @@ public class Domicilio implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "domicilio")
     private Set<Paciente> pacientes;
 
+    public Domicilio() {
+    }
+
     public Domicilio(String calle, String numero, String localidad, String provincia) {
         this.calle = calle;
         this.numero = numero;
@@ -33,6 +36,12 @@ public class Domicilio implements Serializable {
         this.provincia = provincia;
     }
 
-    public Domicilio() {
+    public Domicilio(Long id, String calle, String numero, String localidad, String provincia, Set<Paciente> pacientes) {
+        this.id = id;
+        this.calle = calle;
+        this.numero = numero;
+        this.localidad = localidad;
+        this.provincia = provincia;
+        this.pacientes = pacientes;
     }
 }

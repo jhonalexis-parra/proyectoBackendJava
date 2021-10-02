@@ -1,6 +1,8 @@
 package com.example.trabajofinalv1.service.impl;
 
+import com.example.trabajofinalv1.model.OdontologoDto;
 import com.example.trabajofinalv1.model.PacienteDto;
+import com.example.trabajofinalv1.persistence.entities.Odontologo;
 import com.example.trabajofinalv1.persistence.entities.Paciente;
 import com.example.trabajofinalv1.persistence.repository.IPacienteRepository;
 import com.example.trabajofinalv1.service.IServicePaciente;
@@ -9,7 +11,9 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PacienteService  implements IServicePaciente {
@@ -19,7 +23,6 @@ public class PacienteService  implements IServicePaciente {
 
     @Override
     public PacienteDto guardar(PacienteDto paciente) {
-        paciente.setFechaIngreso(LocalDate.now());
         paciente.setId(repository.save(paciente.toEntity()).getId());
         return paciente;
     }
@@ -32,6 +35,13 @@ public class PacienteService  implements IServicePaciente {
             pacientes.add(new PacienteDto(p));
         }
         return pacientes;
+    }
+
+    @Override
+    public Optional<Paciente> buscarPorId(Long id) {
+        Optional<Paciente> pacienteOptional = repository.findById(id);
+        //Paciente paciente = pacienteOptional.get();
+        return pacienteOptional;
     }
 
     @Override
@@ -49,7 +59,11 @@ public class PacienteService  implements IServicePaciente {
         return "Se ha eliminado " + p.toString();
     }
 
-
+    @Override
+    public String borrarPorId(Long id) {
+        repository.deleteById(id);
+        return "Se ha eliminado el paciente con el id " + id;
+    }
 
 
 }

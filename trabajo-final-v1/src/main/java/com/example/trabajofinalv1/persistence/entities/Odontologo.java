@@ -1,11 +1,13 @@
 package com.example.trabajofinalv1.persistence.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -23,8 +25,13 @@ public class Odontologo implements Serializable {
     private String apellido;
     private String matricula;
 
-    @OneToMany(mappedBy = "odontologo")
-    private Set<Turno> turnos;
+    @OneToMany(mappedBy = "odontologo", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private Set<Turno> turnos = new HashSet<>();
+
+
+    public Odontologo() {
+    }
 
     public Odontologo(String nombre, String apellido, String matricula) {
         this.nombre = nombre;
@@ -32,6 +39,10 @@ public class Odontologo implements Serializable {
         this.matricula = matricula;
     }
 
-    public Odontologo() {
+    public Odontologo(Long id, String nombre, String apellido, String matricula) {
+        this.id = id;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.matricula = matricula;
     }
 }

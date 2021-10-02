@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DomicilioService implements IServiceDomicilio {
@@ -33,6 +34,13 @@ public class DomicilioService implements IServiceDomicilio {
     }
 
     @Override
+    public Optional<Domicilio> buscarPorId(Long id) {
+        Optional<Domicilio> domicilioOptional = repository.findById(id);
+        //Domicilio domicilio = domicilioOptional.get();
+        return domicilioOptional;
+    }
+
+    @Override
     public DomicilioDto actualizar (DomicilioDto d){
         repository.save(d.toEntity());
         return d;
@@ -42,6 +50,12 @@ public class DomicilioService implements IServiceDomicilio {
     public String borrar(DomicilioDto d) {
         repository.delete(d.toEntity());
         return "Se ha eliminado " + d.toString();
+    }
+
+    @Override
+    public String borrarPorId(Long id) {
+        repository.deleteById(id);
+        return "Se ha eliminado el domicilio con id " + id;
     }
 
 }

@@ -1,7 +1,9 @@
 package com.example.trabajofinalv1.service.impl;
 
 import com.example.trabajofinalv1.controller.PacienteController;
+import com.example.trabajofinalv1.model.DomicilioDto;
 import com.example.trabajofinalv1.model.OdontologoDto;
+import com.example.trabajofinalv1.persistence.entities.Domicilio;
 import com.example.trabajofinalv1.persistence.entities.Odontologo;
 import com.example.trabajofinalv1.persistence.repository.IOdontologoRepository;
 import com.example.trabajofinalv1.service.IServiceOdontologo;
@@ -9,11 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class OdontologoService implements IServiceOdontologo {
-
 
     @Autowired
     IOdontologoRepository repository;
@@ -41,6 +43,13 @@ public class OdontologoService implements IServiceOdontologo {
     }
 
     @Override
+    public Optional<Odontologo> buscarPorId(Long id) {
+        Optional<Odontologo> odontologoOptional = repository.findById(id);
+        Odontologo odontologo = odontologoOptional.get();
+        return odontologoOptional;
+    }
+
+    @Override
     public OdontologoDto actualizar (OdontologoDto o){
         // TODO realizar validación de datos de actualización del odontologo
         repository.save(o.toEntity());
@@ -51,6 +60,12 @@ public class OdontologoService implements IServiceOdontologo {
     public String borrar(OdontologoDto o) {
         repository.delete(o.toEntity());
         return "Se ha eliminado " + o.toString();
+    }
+
+    @Override
+    public String borrarPorId(Long id) {
+        repository.deleteById(id);
+        return "Se ha eliminado el odontologo con id " + id;
     }
 
     @Override
