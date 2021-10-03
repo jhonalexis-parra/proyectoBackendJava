@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/login")
 public class UserController {
 
-    @GetMapping("/") //  /login/
+    @GetMapping("/login/") //  /login/
     public ResponseEntity<?> logearse(){
         return ResponseEntity.ok("<h1>Usted se ha logueado</h1>");
     }

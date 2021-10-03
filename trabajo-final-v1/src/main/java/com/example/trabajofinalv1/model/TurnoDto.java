@@ -20,6 +20,12 @@ public class TurnoDto {
     public TurnoDto() {
     }
 
+    public TurnoDto(OdontologoDto odontologo, PacienteDto paciente, Date fechaTurno) {
+        this.odontologo = odontologo;
+        this.paciente = paciente;
+        this.fechaTurno = fechaTurno;
+    }
+
     public TurnoDto (Turno t){
         id = t.getId();
         odontologo = new OdontologoDto(t.getOdontologo()) ;

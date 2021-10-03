@@ -1,5 +1,6 @@
 package com.example.trabajofinalv1.controller;
 
+import com.example.trabajofinalv1.exceptions.ResourceNotFoundException;
 import com.example.trabajofinalv1.model.PacienteDto;
 import com.example.trabajofinalv1.service.impl.PacienteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import org.apache.log4j.Logger;
+import org.springframework.web.client.ResourceAccessException;
 
 @RestController
 @RequestMapping("/pacientes")
@@ -19,19 +21,15 @@ public class PacienteController {
     PacienteService service;
 
     @GetMapping("/todos")
-    public ResponseEntity<List<PacienteDto>> getAll(){
+    public ResponseEntity<List<PacienteDto>> getAll() throws ResourceNotFoundException {
         logger.info("Se solicitá la lista de pacientes");
-        try {
-            logger.debug("Se listan los pacientes");
-            return ResponseEntity.ok(service.buscarTodos());
-        } catch (Exception e){
-            logger.error("Error en el listado de los pacientes");
-            return ResponseEntity.badRequest().build();
-        }
+        logger.debug("Se listan los pacientes");
+        return ResponseEntity.ok(service.buscarTodos());
+
     }
 
     @PostMapping("/nuevo")
-    public ResponseEntity<PacienteDto> crearPaciente (@RequestBody PacienteDto paciente){
+    public ResponseEntity<PacienteDto> crearPaciente (@RequestBody PacienteDto paciente) throws ResourceNotFoundException{
         logger.info("Se solicitá crear un paciente nuevo");
         try{
             logger.debug("Se crea el paciente " + paciente.toString());
@@ -43,7 +41,7 @@ public class PacienteController {
     }
 
     @PutMapping("/actualizar")
-    public ResponseEntity<PacienteDto> actualizarPaciente (@RequestBody PacienteDto paciente){
+    public ResponseEntity<PacienteDto> actualizarPaciente (@RequestBody PacienteDto paciente) throws ResourceNotFoundException{
         logger.info("Se solicitá actualizar un paciente");
         if (paciente.getId() != null){
             logger.debug("Se actualiza " + paciente.toString());
@@ -65,5 +63,15 @@ public class PacienteController {
             logger.error("Error al eliminar el odontologo: " + paciente.toString());
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+
+    @DeleteMapping("/eliminar/{id}")
+    public ResponseEntity<String> borrarPacientePorId (@PathVariable Long id) throws ResourceNotFoundException{
+        logger.info("Se solicita eliminar un paciente con id " + id);
+        if (id <= 0){
+            throw new ResourceNotFoundException("No es posible enviar un id negativo, envie un id entero mayor a cero");
+        }
+        logger.debug("Se elimino el odontologo con el id " + id);
+        return ResponseEntity.ok(service.borrarPorId(id));
     }
 }

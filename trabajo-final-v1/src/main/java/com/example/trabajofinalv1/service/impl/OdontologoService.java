@@ -52,6 +52,7 @@ public class OdontologoService implements IServiceOdontologo {
     @Override
     public OdontologoDto actualizar (OdontologoDto o){
         // TODO realizar validación de datos de actualización del odontologo
+
         repository.save(o.toEntity());
         return o;
     }

@@ -10,4 +10,14 @@ class TrabajoFinalV1ApplicationTests {
 	//void contextLoads() {
 	//}
 
+    //Dado
+            //Instanciación
+
+
+    //Cuando
+        //El objetivo
+
+    //Entonces
+        //La comparación o assert
+
 }

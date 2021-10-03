@@ -19,6 +19,14 @@ public class PacienteDto {
     public PacienteDto() {
     }
 
+    public PacienteDto(String nombre, String apellido, String dni, Date fechaIngreso, DomicilioDto domicilio) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.dni = dni;
+        this.fechaIngreso = fechaIngreso;
+        this.domicilio = domicilio;
+    }
+
     public PacienteDto(Paciente p){
         id = p.getId();
         nombre = p.getNombre();
