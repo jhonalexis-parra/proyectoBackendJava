@@ -162,6 +162,10 @@ http://localhost:8081/turnos/actualizar
 http://localhost:8081/turnos/eliminar/1
 Reemplazar 1 por otros IDs
 
+#### Listar próximos siete días
+http://localhost:8081/turnos/listarProximoSieteDias
+
+
 ## Autor
 
 * **Jhon Parra** - *Bogotá-Colombia* - [jhonalexis-parra](https://github.com/jhonalexis-parra)
