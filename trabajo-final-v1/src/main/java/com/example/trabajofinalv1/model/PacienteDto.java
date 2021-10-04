@@ -3,11 +3,13 @@ package com.example.trabajofinalv1.model;
 import com.example.trabajofinalv1.persistence.entities.Paciente;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.Date;
 
 @Getter
 @Setter
+@ToString
 public class PacienteDto {
     private Long id;
     private String nombre;

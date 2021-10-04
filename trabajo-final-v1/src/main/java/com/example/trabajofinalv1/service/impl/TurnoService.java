@@ -1,14 +1,19 @@
 package com.example.trabajofinalv1.service.impl;
 
+import com.example.trabajofinalv1.exceptions.ResourceNotFoundException;
+import com.example.trabajofinalv1.model.OdontologoDto;
+import com.example.trabajofinalv1.model.PacienteDto;
 import com.example.trabajofinalv1.model.TurnoDto;
+import com.example.trabajofinalv1.persistence.entities.Turno;
 import com.example.trabajofinalv1.persistence.repository.ITurnoRepository;
-import com.example.trabajofinalv1.persistence.repository.IUserRepository;
+
 import com.example.trabajofinalv1.service.IServiceTurno;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class TurnoService implements IServiceTurno {
@@ -16,33 +21,82 @@ public class TurnoService implements IServiceTurno {
     @Autowired
     ITurnoRepository repository;
 
+    @Autowired
+    PacienteService pacienteService;
+
+    @Autowired
+    OdontologoService odontologoService;
+
     @Override
-    public TurnoDto guardar(TurnoDto turnoDto) {
-        return null;
+    public TurnoDto guardar(TurnoDto turnoDto) throws ResourceNotFoundException {
+
+        PacienteDto paciente = new PacienteDto(pacienteService.buscarPorId(turnoDto.getPaciente().getId()).get());
+        OdontologoDto odontologo = new OdontologoDto(odontologoService.buscarPorId(turnoDto.getOdontologo().getId()).get());
+        turnoDto.setPaciente(paciente);
+        turnoDto.setOdontologo(odontologo);
+
+        for (Turno t: repository.findAll()){
+            System.out.println("Entre al repositorio");
+            if (t.getOdontologo().getId() == turnoDto.getOdontologo().getId() && (t.getFechaTurno().compareTo(turnoDto.getFechaTurno()) == 0)){
+                System.out.println("El odontologo ya tiene turno en este horario, agendar otro horario");
+            }
+            if (t.getPaciente().getId() == turnoDto.getPaciente().getId() && (t.getFechaTurno().compareTo(turnoDto.getFechaTurno()) == 0)){
+                System.out.println("Los pacientes son iguales");
+                throw new ResourceNotFoundException("El paciente ya tiene turno en este horario, agendar otro horario");
+            }
+
+        }
+
+        repository.save(turnoDto.toEntity());
+
+        return turnoDto;
     }
 
     @Override
     public List<TurnoDto> buscarTodos() {
-        return null;
+        List <TurnoDto> turnos = repository.findAll().stream().map(o -> new TurnoDto(o)).collect(Collectors.toList());
+        return turnos;
     }
 
     @Override
     public Optional<?> buscarPorId(Long id) {
-        return Optional.empty();
+        Optional<Turno> turnoOptional = repository.findById(id);
+        return turnoOptional;
     }
 
     @Override
-    public TurnoDto actualizar(TurnoDto turnoDto) {
-        return null;
+    public TurnoDto actualizar(TurnoDto turnoDto) throws ResourceNotFoundException {
+        PacienteDto paciente = new PacienteDto(pacienteService.buscarPorId(turnoDto.getPaciente().getId()).get());
+        OdontologoDto odontologo = new OdontologoDto(odontologoService.buscarPorId(turnoDto.getOdontologo().getId()).get());
+        turnoDto.setPaciente(paciente);
+        turnoDto.setOdontologo(odontologo);
+
+        for (Turno t: repository.findAll()){
+            System.out.println("Entre al repositorio");
+            if (t.getOdontologo().getId() == turnoDto.getOdontologo().getId() && (t.getFechaTurno().compareTo(turnoDto.getFechaTurno()) == 0)){
+                System.out.println("El odontologo ya tiene turno en este horario, agendar otro horario");
+            }
+            if (t.getPaciente().getId() == turnoDto.getPaciente().getId() && (t.getFechaTurno().compareTo(turnoDto.getFechaTurno()) == 0)){
+                System.out.println("Los pacientes son iguales");
+                throw new ResourceNotFoundException("El paciente ya tiene turno en este horario, agendar otro horario");
+            }
+
+        }
+
+        repository.save(turnoDto.toEntity());
+
+        return turnoDto;
     }
 
     @Override
     public String borrar(TurnoDto turnoDto) {
-        return null;
+        repository.delete(turnoDto.toEntity());
+        return "Se ha eliminado " + turnoDto.toString();
     }
 
     @Override
     public String borrarPorId(Long id) {
-        return null;
+        repository.deleteById(id);
+        return "Se ha eliminado el turno con el id " + id;
     }
 }

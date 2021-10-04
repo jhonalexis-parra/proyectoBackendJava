@@ -1,5 +1,6 @@
 package com.example.trabajofinalv1.persistence.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -20,14 +21,15 @@ public class Turno implements Serializable {
     @SequenceGenerator(name = "secuenciaDeTurno", sequenceName = "BD_SECUENCIA_TURNO", allocationSize = 1)
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "odontologo_id")
     private Odontologo odontologo;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "paciente_id")
     private Paciente paciente;
 
+    @JsonFormat(pattern="yyyy-MM-dd HH")
     private Date fechaTurno;
 
     public Turno() {

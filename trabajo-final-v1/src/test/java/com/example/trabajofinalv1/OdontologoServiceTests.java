@@ -1,10 +1,12 @@
 package com.example.trabajofinalv1;
 
 import com.example.trabajofinalv1.model.OdontologoDto;
+import com.example.trabajofinalv1.persistence.entities.Odontologo;
 import com.example.trabajofinalv1.service.impl.OdontologoService;
 import org.junit.Assert;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,32 +23,40 @@ public class OdontologoServiceTests {
     @Autowired
     private OdontologoService odontologoService;
 
-    public void cargarDataSet() {
-        this.odontologoService.guardar(new OdontologoDto("Santiago", "Paz", "3455647"));
-
-    }
 
     @Test
     public void agregarOdontologo() {
-        this.cargarDataSet();
-        OdontologoDto odontologo = odontologoService.guardar(new OdontologoDto("Juan", "Ramirez", "348971960"));
+        // Dado
+        OdontologoDto odontologo = new OdontologoDto("Jhon", "Parra", "C0001");
+        // Cuando
+        odontologoService.guardar(odontologo);
+        // Entonces
         Assert.assertTrue(odontologo.getId() != null);
 
     }
 
     @Test
     public void eliminarOdontologoTest() {
+        // Dado
+        OdontologoDto odontologo = new OdontologoDto("Jhon", "Parra", "C0001");
+        odontologoService.guardar(odontologo);
+        //Cuando
         odontologoService.borrarPorId(1L);
-        Assert.assertTrue(!odontologoService.buscarPorId(1L).isPresent());
+        //Entonces
+        Assert.assertTrue(odontologoService.buscarTodos().size() == 1);
 
     }
 
     @Test
     public void traerTodos() {
+        // Dado
+        OdontologoDto odontologo = new OdontologoDto("Jhon", "Parra", "C0001");
+        odontologoService.guardar(odontologo);
+        // Cuando
         List<OdontologoDto> odontologos = odontologoService.buscarTodos();
-        Assert.assertTrue(odontologos.isEmpty());
-        Assert.assertTrue(odontologos.size() == 1);
-        System.out.println(odontologos);
+        // Entonces
+        Assert.assertTrue(odontologos.size() == 2);
+
     }
 
 }

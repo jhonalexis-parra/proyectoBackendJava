@@ -1,5 +1,7 @@
 package com.example.trabajofinalv1.persistence.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -24,6 +26,7 @@ public class Domicilio implements Serializable {
     private String provincia;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "domicilio")
+    @JsonIgnore
     private Set<Paciente> pacientes;
 
     public Domicilio() {

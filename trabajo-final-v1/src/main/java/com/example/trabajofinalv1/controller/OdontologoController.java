@@ -24,30 +24,32 @@ public class OdontologoController{
 
     @GetMapping("/todos")
     public ResponseEntity<List<OdontologoDto>> getAll() throws ResourceNotFoundException {
-        logger.info("Se solicitá la lista de odontologos");
+        logger.info("Se solicitá la lista de odontólogos");
+        logger.info("Se listan los odontólogos");
         return ResponseEntity.ok(service.buscarTodos());
    }
 
     @PostMapping("/nuevo")
     public ResponseEntity<OdontologoDto> crearOdontologo (@RequestBody OdontologoDto odontologo) throws ResourceNotFoundException {
         logger.info("Se solicitá crear un odontologo nuevo");
-        if (odontologo.getNombre() == null){
-            throw new ResourceNotFoundException("Falta agregar el nombre del odontologo");
+        if (odontologo.getNombre().equals(null)){
+            throw new ResourceNotFoundException("Falta agregar el nombre del odontólogo");
         }
-        else if(odontologo.getApellido() == null){
-            throw new ResourceNotFoundException("Falta agregar el apellido del odontologo");
+        else if(odontologo.getApellido().equals(null) ){
+            throw new ResourceNotFoundException("Falta agregar el apellido del odontólogo");
         }
-        else if(odontologo.getMatricula() == null){
-            throw new ResourceNotFoundException("Falta agregar la matricula del odontologo");
+        else if(odontologo.getMatricula().equals(null)){
+            throw new ResourceNotFoundException("Falta agregar la matricula del odontólogo");
         }
+        logger.info("Se crea un odontólogo nuevo");
         return ResponseEntity.ok(service.guardar(odontologo));
     }
 
     @PutMapping("/actualizar")
     public ResponseEntity<OdontologoDto> actualizarOdontologo (@RequestBody OdontologoDto odontologo) throws ResourceNotFoundException{
-        logger.info("Se solicitá actualizar un odontologo");
+        logger.info("Se solicitá actualizar un odontólogo");
         if (odontologo.getId() == null){
-            throw new ResourceNotFoundException("Falta agregar el id del odontologo");
+            throw new ResourceNotFoundException("Falta agregar el id del odontólogo");
         }
         logger.debug("Se actualiza " + odontologo.toString());
         return ResponseEntity.ok(service.actualizar(odontologo));
@@ -65,11 +67,11 @@ public class OdontologoController{
 
     @GetMapping("/buscarPorId/{id}")
     public ResponseEntity<?> buscarPorId(@PathVariable Long id) throws ResourceNotFoundException{
-        logger.info("Se solicita búsqueda odontologos por id");
-        if (id < 0){
+        logger.info("Se solicita búsqueda del odontologo con el id");
+        if (id <= 0){
             throw new ResourceNotFoundException("No es posible enviar un id negativo, envie un id entero mayor o igual a cero");
         }
-        logger.debug("Se encontraron los odontologos con el id " + id);
+        logger.debug("Se encontró el odontólogo con el id " + id);
         return ResponseEntity.ok(service.buscarPorId(id));
     }
 
@@ -85,11 +87,11 @@ public class OdontologoController{
 
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<?> borrarPorId(@PathVariable Long id) throws ResourceNotFoundException{
-        logger.info("Se solicita eliminar odontologo por id");
+        logger.info("Se solicita eliminar odontólogo por id");
         if (id <= 0){
             throw new ResourceNotFoundException("No es posible enviar un id negativo, envie un id entero mayor a cero");
         }
-        logger.debug("Se elimino el odontologo con el id " + id);
+        logger.debug("Se elimino el odontólogo con el id " + id);
         return ResponseEntity.ok(service.borrarPorId(id));
     }
 }

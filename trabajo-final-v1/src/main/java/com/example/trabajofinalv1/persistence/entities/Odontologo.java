@@ -25,7 +25,7 @@ public class Odontologo implements Serializable {
     private String apellido;
     private String matricula;
 
-    @OneToMany(mappedBy = "odontologo", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "odontologo", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
     @JsonIgnore
     private Set<Turno> turnos = new HashSet<>();
 

@@ -3,9 +3,11 @@ package com.example.trabajofinalv1.model;
 import com.example.trabajofinalv1.persistence.entities.Odontologo;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Setter
 @Getter
+@ToString
 public class OdontologoDto {
 
     private Long id;

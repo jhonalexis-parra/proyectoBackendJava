@@ -28,50 +28,71 @@ public class PacienteController {
 
     }
 
+    @GetMapping("/buscarPorId/{id}")
+    public ResponseEntity<?> buscarPorId(@PathVariable Long id) throws ResourceNotFoundException{
+        logger.info("Se solicita búsqueda de paciente por id");
+        if (id < 0){
+            throw new ResourceNotFoundException("No es posible enviar un id negativo, envie un id entero mayor o igual a cero");
+        }
+        logger.debug("Se encontro el paciente con el id " + id);
+        return ResponseEntity.ok(service.buscarPorId(id));
+    }
+
     @PostMapping("/nuevo")
     public ResponseEntity<PacienteDto> crearPaciente (@RequestBody PacienteDto paciente) throws ResourceNotFoundException{
         logger.info("Se solicitá crear un paciente nuevo");
-        try{
-            logger.debug("Se crea el paciente " + paciente.toString());
-            return ResponseEntity.ok(service.guardar(paciente));
-        }catch (Exception e){
-            logger.error("Error al crear el paciente: " + paciente.toString());
-            return ResponseEntity.badRequest().build();
+        if (paciente.getNombre().equals(null)){
+            throw new ResourceNotFoundException("El paciente no tiene nombre, agregar el nombre");
         }
+        else if (paciente.getApellido().equals(null)){
+            throw new ResourceNotFoundException("El paciente no tiene apellido, agregar el apellido");
+        }
+        else if (paciente.getDni().equals(null)){
+            throw new ResourceNotFoundException("El paciente no tiene DNI, agregar el DNI");
+        }
+        else if (paciente.getDomicilio().getCalle().equals(null)){
+            throw new ResourceNotFoundException("El paciente no tiene en su domicilio la calle, agregar la calle");
+        }
+        else if (paciente.getDomicilio().getNumero().equals(null)){
+            throw new ResourceNotFoundException("El paciente no tiene en su domicilio el número, agregar el número");
+        }
+        else if (paciente.getDomicilio().getLocalidad().equals(null)){
+            throw new ResourceNotFoundException("El paciente no tiene en su domicilio la localidad, agregar la localidad");
+        }
+        else if (paciente.getDomicilio().getProvincia().equals(null)){
+            throw new ResourceNotFoundException("El paciente no tiene en su domicilio la provincia, agregar la provincia");
+        }
+        logger.debug("Se crea el paciente " + paciente.toString());
+        return ResponseEntity.ok(service.guardar(paciente));
     }
 
     @PutMapping("/actualizar")
     public ResponseEntity<PacienteDto> actualizarPaciente (@RequestBody PacienteDto paciente) throws ResourceNotFoundException{
         logger.info("Se solicitá actualizar un paciente");
-        if (paciente.getId() != null){
-            logger.debug("Se actualiza " + paciente.toString());
-
-            return ResponseEntity.ok(service.actualizar(paciente));
-        }else{
-            logger.error("Error al actualizar el paciente: " + paciente.toString());
-            return ResponseEntity.badRequest().body(paciente);
+        if (paciente.getId() == null){
+            throw new ResourceNotFoundException("Se debe enviar el id del paciente a actualizar, enviar id");
         }
+        logger.debug("Se actualiza " + paciente.toString());
+        return ResponseEntity.ok(service.actualizar(paciente));
     }
 
     @DeleteMapping("/eliminar")
-    public ResponseEntity<String> borrarPaciente (@RequestBody PacienteDto paciente){
+    public ResponseEntity<String> borrarPaciente (@RequestBody PacienteDto paciente) throws ResourceNotFoundException{
         logger.info("Se solicita eliminar un paciente");
-        try {
-            logger.debug("Se eliminó el odontologo " + paciente.toString());
-            return ResponseEntity.ok(service.borrar(paciente));
-        } catch (Exception e){
-            logger.error("Error al eliminar el odontologo: " + paciente.toString());
-            return ResponseEntity.badRequest().body(e.getMessage());
+        if (paciente.getId() == null){
+            throw new ResourceNotFoundException("Se debe enviar el id del paciente para ser eliminado");
         }
+        logger.debug("Se eliminó el paciente " + paciente.toString());
+        return ResponseEntity.ok(service.borrar(paciente));
     }
 
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<String> borrarPacientePorId (@PathVariable Long id) throws ResourceNotFoundException{
-        logger.info("Se solicita eliminar un paciente con id " + id);
+        logger.info("Se solicita eliminar el paciente con id " + id);
         if (id <= 0){
             throw new ResourceNotFoundException("No es posible enviar un id negativo, envie un id entero mayor a cero");
         }
-        logger.debug("Se elimino el odontologo con el id " + id);
+        logger.debug("Se elimino el paciente con el id " + id);
         return ResponseEntity.ok(service.borrarPorId(id));
     }
 }

@@ -32,27 +32,36 @@ public class PacienteServiceTests {
     }
 
     @Test
-    public void agregarYBuscarPacienteTest() {
-        this.cargarDataSet();
-        DomicilioDto domicilio = new DomicilioDto("Calle", "123", "Temperley", "Buenos Aires");
-        PacienteDto p = pacienteService.guardar(new PacienteDto("Tomas", "Pereyra", "12345678", new Date(), domicilio));
-
-        Assert.assertNotNull(pacienteService.buscarPorId(p.getId()));
+    public void agregarPacienteTest() {
+        //Dado
+        DomicilioDto domicilio = new DomicilioDto("Calle 80", "70", "Engativa", "Bogotá");
+        // Cuando
+        PacienteDto paciente = pacienteService.guardar(new PacienteDto("Jhon", "Parra", "545215122", new Date(), domicilio));
+        // Entonces
+        Assert.assertNotNull(pacienteService.buscarPorId(paciente.getId()));
     }
 
     @Test
     public void eliminarPacienteTest() {
-        pacienteService.borrarPorId(3L);
+        //Dado
+        DomicilioDto domicilio = new DomicilioDto("Calle 120", "70", "Suba", "Bogotá");
+        PacienteDto paciente = pacienteService.guardar(new PacienteDto("Miguel", "Pelaez", "545515122", new Date(), domicilio));
+        //Cuando
+        pacienteService.borrarPorId(2L);
+        //Entonces
         Assert.assertTrue(!pacienteService.buscarPorId(3L).isPresent());
 
     }
 
     @Test
     public void traerTodos() {
+        // Dado
+        DomicilioDto domicilio = new DomicilioDto("Calle 190", "20", "Usaquen", "Bogotá");
+        PacienteDto paciente = pacienteService.guardar(new PacienteDto("Andrea", "Martinez", "95515122", new Date(), domicilio));
+        // Cuando
         List<PacienteDto> pacientes = pacienteService.buscarTodos();
+        // Entonces
         Assert.assertTrue(!pacientes.isEmpty());
-        Assert.assertTrue(pacientes.size() == 2);
-        System.out.println(pacientes);
     }
 
 }

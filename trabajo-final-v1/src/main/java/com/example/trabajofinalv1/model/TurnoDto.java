@@ -3,14 +3,17 @@ package com.example.trabajofinalv1.model;
 import com.example.trabajofinalv1.persistence.entities.Odontologo;
 import com.example.trabajofinalv1.persistence.entities.Paciente;
 import com.example.trabajofinalv1.persistence.entities.Turno;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.exception.DataException;
 
 import java.util.Date;
 
 @Getter
 @Setter
+@ToString
 public class TurnoDto {
     private Long id;
     private OdontologoDto odontologo;

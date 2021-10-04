@@ -9,7 +9,10 @@ import com.example.trabajofinalv1.service.IServicePaciente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,6 +26,7 @@ public class PacienteService  implements IServicePaciente {
 
     @Override
     public PacienteDto guardar(PacienteDto paciente) {
+        paciente.setFechaIngreso(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
         paciente.setId(repository.save(paciente.toEntity()).getId());
         return paciente;
     }

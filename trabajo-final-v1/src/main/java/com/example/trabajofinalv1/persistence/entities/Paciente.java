@@ -1,5 +1,7 @@
 package com.example.trabajofinalv1.persistence.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,6 +27,7 @@ public class Paciente implements Serializable {
     private String nombre;
     private String apellido;
     private String dni;
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date fechaIngreso;
 
     @ManyToOne(cascade = CascadeType.ALL)
