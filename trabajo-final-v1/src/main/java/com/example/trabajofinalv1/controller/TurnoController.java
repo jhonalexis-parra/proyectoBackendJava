@@ -101,6 +101,13 @@ public class TurnoController {
         return ResponseEntity.ok(turnoService.borrarPorId(id));
     }
 
+    @GetMapping("/listarProximoSieteDias")
+    public ResponseEntity<?> listarlistarProximoSieteDias() {
+        logger.info("Se solicitá la lista de turnos");
+        logger.info("Se listan los turnos");
+        return ResponseEntity.ok(turnoService.buscarProximosSieteDias());
+    }
+
 
 
 

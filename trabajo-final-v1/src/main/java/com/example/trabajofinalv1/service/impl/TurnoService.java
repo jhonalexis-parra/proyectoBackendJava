@@ -11,6 +11,11 @@ import com.example.trabajofinalv1.service.IServiceTurno;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -99,4 +104,25 @@ public class TurnoService implements IServiceTurno {
         repository.deleteById(id);
         return "Se ha eliminado el turno con el id " + id;
     }
+
+    public List<TurnoDto> buscarProximosSieteDias (){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(Timestamp.valueOf(LocalDateTime.now()));
+        System.out.println(calendar);
+        calendar.add(Calendar.DAY_OF_YEAR, 7);
+        System.out.println(calendar);
+        List <TurnoDto> turnos = new ArrayList<>();
+        //List <TurnoDto> turnos = (List<TurnoDto>) repository.findAll().stream().filter(turnoDto -> turnoDto.getFechaTurno().before(calendar.getTime()));
+        for (Turno t: repository.findAll()) {
+            if (t.getFechaTurno().before(calendar.getTime())){
+                turnos.add(new TurnoDto(t));
+            }
+
+        }
+
+        return turnos;
+
+    }
+
+
 }
