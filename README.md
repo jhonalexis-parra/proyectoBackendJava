@@ -13,13 +13,27 @@
 
 ## Construido con 🛠️
 
-* [Maven](https://maven.apache.org/) - Manejador de dependencias
+* [Spring boot](https://spring.io/) - Manejador de dependencias
 
 ## Wiki 📖
 
+### Descripción
+El proyecto consiste en el desarrollo de una API Rest para una clinica odontologica, clinica con la caracteristica de estar las 24 horas abierta las siete días de la semana, hay espacio para que todos los odontologos atiendan a cualquier hora.
+
+### Login
+Para utilizar la aplicación primero se debe realizar el login
+http://localhost:8081/login
+##### Usuario administrador (Recomendado todas las funcionalidades)
+username = admin@digital.com
+password = password 
+
+##### Usuario usuario (Solo turnos)
+username = user@digital.com
+password = password2
+
 ### Odontologo
 
-#### Crear odontologo
+#### Crear odontologo  (POST)
 http://localhost:8081/odontologos/nuevo
 
 {
@@ -40,10 +54,10 @@ http://localhost:8081/odontologos/nuevo
     "matricula": "ARG0003"
 }
 
-#### Buscar todos los odontologos
+#### Buscar todos los odontologos (GET)
 http://localhost:8081/odontologos/todos
 
-#### Actualizar odontologo
+#### Actualizar odontologo (PUT)
 http://localhost:8081/odontologos/actualizar
 {
     "id": 3,
@@ -52,14 +66,30 @@ http://localhost:8081/odontologos/actualizar
     "matricula": "ARG0002"
 }
 
-#### Buscar por nombre
+#### Buscar por nombre (GET)
 http://localhost:8081/odontologos/buscarPorNombre/Rodrigo
 
 Reemplazar Rodrigo por otros nombres
 
+#### Consultar por Id (GET)
+http://localhost:8081/odontologos/buscarPorId/1
+Reemplazar el 1 por otros IDs
+
+#### Eliminar por Id (DELETE)
+http://localhost:8081/odontologos/eliminar/1
+Reemplazar 1 por otros IDs
+
+#### Elimina odontólogo (DELETE)
+http://localhost:8081/odontologos/eliminar
+{"id": 2,
+        "nombre": "Rodrigo",
+        "apellido": "Luna",
+        "matricula": "ARG0002"
+}
+
 ### Paciente
 
-#### Crear paciente
+#### Crear paciente  (POST)
 http://localhost:8081/pacientes/nuevo
 
 {
@@ -74,10 +104,10 @@ http://localhost:8081/pacientes/nuevo
     }
 }
 
-#### Buscar todos los pacientes
+#### Buscar todos los pacientes (GET)
 http://localhost:8081/pacientes/todos
 
-#### Actualizar paciente
+#### Actualizar paciente (PUT)
 http://localhost:8081/pacientes/actualizar
 
 {
@@ -94,22 +124,43 @@ http://localhost:8081/pacientes/actualizar
    }
 }
 
+#### Buscar Por Id (GET)
+http://localhost:8081/pacientes/buscarPorId/1
+Reemplazar 1 por otros IDs
 
-### Domicilio
+#### Elimiar por ID (DELETE)
+http://localhost:8081/pacientes/eliminar/1
+Reemplazar 1 por otros IDs
 
-#### Buscar todos los odontologos
-http://localhost:8081/domicilios/todos
+### Turnos
 
+#### Crear Turno  (POST)
+http://localhost:8081/turnos/nuevo
+{
+    "odontologo" : {"id": 1},
+    "paciente" : {"id": 1},
+    "fechaTurno" : "2021-10-25T18:00:00"
+}
 
-**Funcionalidad actual actualizar paciente:** es posible actualizar los pacientes y el domicilio pero se debe enviar el id del domicilio para no crear uno nuevo.
-**Funcionalidad actual buscarOdontologoPorNombre:** se construye la consulta de ejemplo de buscar nombre por odontologo.
+#### Listar turnos (GET)
+http://localhost:8081/turnos/listarTodos
 
-**Funcionalidades ha realizar:** falta validar los campos de los actualizaciones y agregar el buscar por id y el borrar en todas las entidades.
+#### Buscar turno por id (GET)
+http://localhost:8081/turnos/buscarPorId/1
+Reemplazar 1 por otros IDs
 
-**Por implementar:**
-1. Turnos
-2. Log4j
-3. Nuevas consultas HQL
+#### Actualizar turno (PUT)
+http://localhost:8081/turnos/actualizar
+{
+    "id" : 1,
+    "odontologo" : {"id": 1},
+    "paciente" : {"id": 1},
+    "fechaTurno" : "2021-10-25T20:00:00"
+}
+
+#### Eliminar turno por ID (DELETE)
+http://localhost:8081/turnos/eliminar/1
+Reemplazar 1 por otros IDs
 
 ## Autor
 
